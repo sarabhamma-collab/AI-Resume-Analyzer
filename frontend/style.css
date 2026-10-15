@@ -1,0 +1,568 @@
+
+/* ========================================
+   AI RESUME ANALYZER - MAIN STYLESHEET
+   ======================================== */
+
+/* 1. Reset and global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #3730a3;
+    --primary-light: #eef2ff;
+    --background: #f5f7fb;
+    --surface: #ffffff;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --border: #e5e7eb;
+    --success: #15803d;
+    --success-bg: #f0fdf4;
+    --danger: #b91c1c;
+    --danger-bg: #fef2f2;
+    --warning: #92400e;
+    --warning-bg: #fffbeb;
+    --shadow: 0 8px 30px rgba(15, 23, 42, 0.07);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* 2. Main page container */
+.container {
+    width: min(1100px, 92%);
+    margin: 0 auto;
+    padding: 35px 0 50px;
+}
+
+/* 3. Header */
+header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+header h1 {
+    color: var(--primary);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    line-height: 1.25;
+    margin-bottom: 10px;
+    letter-spacing: -0.8px;
+}
+
+header p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* 4. Main analyzer form */
+.analyzer {
+    background: var(--surface);
+    padding: 30px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    margin-bottom: 25px;
+}
+
+.analyzer h2 {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+}
+
+.section-description {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+}
+
+/* 5. Form groups and labels */
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.helper-text {
+    color: var(--text-secondary);
+    font-size: 0.86rem;
+    margin-top: 7px;
+}
+
+/* 6. Textareas */
+textarea {
+    display: block;
+    width: 100%;
+    min-height: 155px;
+    padding: 14px 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #ffffff;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    resize: vertical;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea::placeholder {
+    color: #9ca3af;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+/* 7. PDF upload input */
+input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    border: 1px dashed #a5b4fc;
+    border-radius: 10px;
+    background: #f8faff;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.92rem;
+    cursor: pointer;
+}
+
+input[type="file"]:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+input[type="file"]::file-selector-button {
+    padding: 9px 14px;
+    margin-right: 12px;
+    border: none;
+    border-radius: 7px;
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background: #dfe5ff;
+}
+
+/* 8. Analyze button */
+button,
+#analyze-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 10px;
+    background: var(--primary);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover,
+#analyze-button:hover {
+    background: var(--primary-dark);
+    box-shadow: 0 5px 15px rgba(79, 70, 229, 0.2);
+    transform: translateY(-1px);
+}
+
+button:active,
+#analyze-button:active {
+    transform: translateY(0);
+}
+
+button:disabled,
+#analyze-button:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 9. Status and error messages */
+#status {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 9px;
+    font-size: 0.93rem;
+    overflow-wrap: anywhere;
+}
+
+#status:empty {
+    display: none;
+}
+
+/* Supports status classes if JavaScript adds them */
+#status.success {
+    color: var(--success);
+    background: var(--success-bg);
+    border: 1px solid #bbf7d0;
+}
+
+#status.error {
+    color: var(--danger);
+    background: var(--danger-bg);
+    border: 1px solid #fecaca;
+}
+
+#status.loading {
+    color: var(--primary-dark);
+    background: var(--primary-light);
+    border: 1px solid #c7d2fe;
+}
+
+/* 10. Results section */
+#results {
+    margin-top: 28px;
+}
+
+#results[hidden] {
+    display: none !important;
+}
+
+.results-heading {
+    margin-bottom: 20px;
+}
+
+.results-heading h2 {
+    font-size: 1.6rem;
+    margin-bottom: 5px;
+}
+
+.results-heading p {
+    color: var(--text-secondary);
+}
+
+/* 11. Match score card */
+.match-card {
+    padding: 28px;
+    margin-bottom: 22px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #ffffff;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+.match-card h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    opacity: 0.95;
+}
+
+#match-percentage {
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+/* 12. Skill cards layout */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.skill-card {
+    min-width: 0;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+    box-shadow: 0 4px 15px rgba(15, 23, 42, 0.035);
+}
+
+.skill-card h3 {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.skill-card.required {
+    border-top: 4px solid var(--primary);
+}
+
+.skill-card.matching {
+    border-top: 4px solid #16a34a;
+}
+
+.skill-card.missing {
+    border-top: 4px solid #dc2626;
+}
+
+/* 13. Skill lists */
+.skill-card ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-card li {
+    max-width: 100%;
+    padding: 6px 10px;
+    border-radius: 7px;
+    background: #f3f4f6;
+    color: #374151;
+    font-size: 0.85rem;
+    overflow-wrap: anywhere;
+}
+
+.skill-card.matching li {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.skill-card.missing li {
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+
+.skill-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* 14. AI recommendations card */
+.ai-card {
+    padding: 26px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+}
+
+.ai-card h2 {
+    font-size: 1.35rem;
+    margin-bottom: 18px;
+    color: var(--primary-dark);
+}
+
+#ai-answer {
+    color: var(--text-primary);
+    font-size: 0.96rem;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+/* AI answer formatting */
+#ai-answer h1,
+#ai-answer h2,
+#ai-answer h3,
+#ai-answer h4 {
+    line-height: 1.4;
+    margin: 22px 0 10px;
+    color: var(--text-primary);
+}
+
+#ai-answer h1 {
+    font-size: 1.45rem;
+}
+
+#ai-answer h2 {
+    font-size: 1.25rem;
+}
+
+#ai-answer h3 {
+    font-size: 1.1rem;
+}
+
+#ai-answer p {
+    margin-bottom: 13px;
+}
+
+#ai-answer ul,
+#ai-answer ol {
+    padding-left: 24px;
+    margin: 10px 0 18px;
+}
+
+#ai-answer li {
+    margin-bottom: 7px;
+}
+
+#ai-answer strong {
+    color: #111827;
+}
+
+#ai-answer code {
+    padding: 2px 5px;
+    border-radius: 4px;
+    background: #f3f4f6;
+    font-family: Consolas, Monaco, monospace;
+    font-size: 0.9em;
+}
+
+#ai-answer pre {
+    padding: 16px;
+    margin: 14px 0;
+    border-radius: 9px;
+    background: #111827;
+    color: #f9fafb;
+    overflow-x: auto;
+}
+
+#ai-answer pre code {
+    padding: 0;
+    background: transparent;
+    color: inherit;
+}
+
+#ai-answer blockquote {
+    padding: 12px 16px;
+    margin: 14px 0;
+    border-left: 4px solid var(--primary);
+    background: var(--primary-light);
+    color: #374151;
+}
+
+#ai-answer a {
+    color: var(--primary);
+    text-decoration: underline;
+    overflow-wrap: anywhere;
+}
+
+#ai-answer hr {
+    margin: 18px 0;
+    border: 0;
+    border-top: 1px solid var(--border);
+}
+
+/* 15. Footer */
+footer {
+    padding: 24px 10px 0;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+}
+
+footer a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* 16. Utility classes */
+.hidden {
+    display: none !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.muted {
+    color: var(--text-secondary);
+}
+
+/* 17. Tablet layout */
+@media (max-width: 850px) {
+    .skills-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .skill-card:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .container {
+        width: min(100% - 32px, 700px);
+        padding-top: 28px;
+    }
+}
+
+/* 18. Mobile layout */
+@media (max-width: 600px) {
+    .container {
+        width: calc(100% - 24px);
+        padding: 22px 0 35px;
+    }
+
+    header {
+        margin-bottom: 22px;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .analyzer {
+        padding: 20px 16px;
+        border-radius: 14px;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skill-card:last-child {
+        grid-column: auto;
+    }
+
+    .skill-card,
+    .ai-card {
+        padding: 19px;
+    }
+
+    .match-card {
+        padding: 23px 16px;
+    }
+
+    textarea {
+        min-height: 135px;
+        font-size: 16px;
+    }
+
+    button,
+    #analyze-button {
+        padding: 14px 16px;
+    }
+}
+
+/* 19. Accessibility: reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

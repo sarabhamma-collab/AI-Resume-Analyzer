@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compare your resume with a job description, identify skill gaps, and get AI-powered career recommendations.">
+
+    <title>AI Resume Analyzer</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="container">
+
+        <header>
+            <p class="eyebrow">AI CAREER ASSISTANT</p>
+
+            <h1>AI Resume Analyzer</h1>
+
+            <p class="subtitle">
+                Compare your resume with a job description, discover skill gaps,
+                and prepare for interviews with practical AI recommendations.
+            </p>
+        </header>
+
+        <!-- Resume analysis form -->
+        <form id="analyzer-form" novalidate>
+
+            <label for="resumeFile">Upload Resume (PDF)</label>
+
+            <input
+                type="file"
+                id="resumeFile"
+                name="resume_file"
+                accept=".pdf,application/pdf"
+                aria-describedby="pdf-help"
+            >
+
+            <p class="helper-text" id="pdf-help">
+                PDF only, maximum 5 MB. Scanned PDFs may not be readable.
+            </p>
+
+            <div class="separator" aria-hidden="true">
+                <span>OR</span>
+            </div>
+
+            <label for="resume">Paste Your Resume</label>
+
+            <textarea
+                id="resume"
+                name="resume"
+                rows="8"
+                maxlength="100000"
+                placeholder="Paste your resume text here..."
+                aria-describedby="resume-help"
+            ></textarea>
+
+            <p class="helper-text" id="resume-help">
+                Upload a PDF or paste your resume text, not both.
+            </p>
+
+            <label for="job-description">Job Description</label>
+
+            <textarea
+                id="job-description"
+                name="job_description"
+                rows="7"
+                maxlength="30000"
+                placeholder="Paste the job description here..."
+                required
+            ></textarea>
+
+            <button type="submit" id="analyze-button">
+                Analyze My Resume
+            </button>
+
+            <p id="status" role="status" aria-live="polite"></p>
+
+        </form>
+
+        <!-- Analysis results -->
+        <section
+            id="results"
+            hidden
+            aria-labelledby="results-heading"
+        >
+
+            <h2 id="results-heading">Your Analysis</h2>
+
+            <!-- Match score -->
+            <div class="match-card">
+                <p>Resume Keyword Match</p>
+
+                <strong id="match-percentage">0%</strong>
+
+                <p class="helper-text">
+                    This score reflects recognized skills in the job description.
+                    It does not guarantee job selection or overall job suitability.
+                </p>
+            </div>
+
+            <!-- Skills -->
+            <div class="skills-grid">
+
+                <div class="skill-card">
+                    <h3>Required Skills</h3>
+                    <ul id="required-skills"></ul>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Matching Skills</h3>
+                    <ul id="matching-skills"></ul>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Skills to Develop</h3>
+                    <ul id="missing-skills"></ul>
+                </div>
+
+            </div>
+
+            <!-- AI recommendations -->
+            
+            <div class="answer-card">
+               <h3>AI Recommendations</h3>
+               <div id="ai-answer"></div>
+
+              <button type="button" id="download-report">
+                   Download Analysis Report
+             </button>
+            </div>
+
+
+        </section>
+
+        <footer>
+            <p>AI Resume Analyzer | Built with FastAPI, Python, and Groq AI</p>
+        </footer>
+
+    </main>
+    
+    <!-- Markdown library -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- DOMPurify library (agar pehle se hai, duplicate mat karna) -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+
+    <!-- jsPDF library -->
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+
+    <!-- Your JavaScript file: always last -->
+    <script src="script.js" defer></script>
+</body>
+</html>
+
+</body>
+</html>
