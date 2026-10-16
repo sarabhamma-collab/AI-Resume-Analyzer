@@ -111,6 +111,12 @@ Open http://127.0.0.1:5500 in your browser.
 - Job-specific interview question generation.
 - Automated tests and deployment.
 
+
+## Application Screenshot
+
+![AI Resume Analyzer](screenshots/resume-analyzer.png)
+
+
 ## Author
 
 **Sara Garg**
