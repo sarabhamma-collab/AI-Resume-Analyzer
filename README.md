@@ -114,7 +114,7 @@ Open http://127.0.0.1:5500 in your browser.
 
 ## Application Screenshot
 
-![AI Resume Analyzer](screenshots/resume-analyzer.png)
+![AI Resume Analyzer](screenshot/resume-analyzer.png)
 
 
 ## Author
