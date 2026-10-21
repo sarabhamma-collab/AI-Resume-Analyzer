@@ -1,5 +1,6 @@
 import os
 import re
+import time
 from io import BytesIO
 from pathlib import Path
 
@@ -289,16 +290,18 @@ Write these sections:
             response.choices[0].message.content
             or "The AI returned an empty response."
         )
+    except Exception as exc:
+        # Log the provider error for debugging; never log the API key.
+        print(f"Groq API error type: {type(exc).__name__}")
 
-    except Exception:
-        # Do not expose API keys or internal provider error details.
         raise HTTPException(
             status_code=502,
             detail=(
-                "Groq AI request failed. Check your API key, model availability, "
-                "internet connection, and backend terminal."
+                "Groq AI request failed. Check the backend terminal "
+                "for diagnostic information."
             ),
         )
+
 
     return {
         "required_skills": required_skills,
@@ -322,11 +325,27 @@ def home():
 
 @app.post("/ask")
 def ask_question(data: ResumeRequest):
-    """Analyze a resume pasted as text."""
-    return analyze_resume(
+    """Analyze resume text and measure processing time."""
+
+    start_time = time.perf_counter()
+
+    result = analyze_resume(
         data.resume,
         data.job_description,
     )
+
+    processing_time = time.perf_counter() - start_time
+
+    result["processing_time_seconds"] = round(processing_time, 2)
+
+    print(
+        f"Resume analysis processing time: "
+        f"{processing_time:.2f} seconds"
+    )
+
+    return result
+
+
 
 
 @app.post("/analyze-pdf")
