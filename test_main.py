@@ -150,3 +150,19 @@ def test_ask_returns_502_when_ai_provider_fails(mock_openai):
 
     assert response.status_code == 502
     assert "Groq AI request failed" in response.json()["detail"]
+
+def test_pdf_rejects_oversized_file():
+    response = client.post(
+        "/analyze-pdf",
+        data={"job_description": "Python developer with FastAPI skills"},
+        files={
+            "resume_file": (
+                "large.pdf",
+                b"%PDF-" + b"A" * (5 * 1024 * 1024),
+                "application/pdf",
+            )
+        },
+    )
+
+    assert response.status_code == 400
+    assert "5 MB" in response.json()["detail"]
