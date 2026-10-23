@@ -2,6 +2,7 @@ import os
 import re
 import time
 from io import BytesIO
+import logging
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -17,6 +18,26 @@ from pypdf import PdfReader
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / ".env", override=True)
 MAX_PDF_SIZE = 5 * 1024 * 1024  # 5 MB
+
+
+LOG_DIR = BASE_DIR / "logs"
+LOG_DIR.mkdir(exist_ok=True)
+
+LOG_FILE = LOG_DIR / "app.log"
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
+    handlers=[
+        logging.FileHandler(LOG_FILE, encoding="utf-8"),
+        logging.StreamHandler(),
+    ],
+)
+
+logger = logging.getLogger(__name__)
+
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="AI Resume Analyzer",
@@ -291,8 +312,10 @@ Write these sections:
             or "The AI returned an empty response."
         )
     except Exception as exc:
-        # Log the provider error for debugging; never log the API key.
-        print(f"Groq API error type: {type(exc).__name__}")
+        logger.warning(
+           "Groq API request failed. Error type: %s",
+           type(exc).__name__,
+        )
 
         raise HTTPException(
             status_code=502,
@@ -338,9 +361,9 @@ def ask_question(data: ResumeRequest):
 
     result["processing_time_seconds"] = round(processing_time, 2)
 
-    print(
-        f"Resume analysis processing time: "
-        f"{processing_time:.2f} seconds"
+    logger.info(
+    "Resume analysis completed in %.2f seconds",
+    processing_time,
     )
 
     return result
@@ -416,11 +439,16 @@ async def analyze_pdf(
         except HTTPException:
             raise
 
-        except Exception:
+        except Exception as exc:
+            logger.warning(
+                "PDF parsing failed. Error type: %s",
+                type(exc).__name__,
+            )
             raise HTTPException(
                 status_code=400,
                 detail="Could not read this PDF. Please try another valid PDF file.",
-            )
+            ) from exc
+
 
         if not resume_text:
             raise HTTPException(
