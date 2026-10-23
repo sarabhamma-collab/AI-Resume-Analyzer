@@ -8,3 +8,4 @@ pypdf
 pytest
 httpx
 python-multipart
+requests
