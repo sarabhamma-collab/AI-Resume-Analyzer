@@ -1,5 +1,7 @@
 # AI Resume Analyzer
 
+[![AI Resume Analyzer CI](https://github.com/sarabhamma-collab/AI-Resume-Analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/sarabhamma-collab/AI-Resume-Analyzer/actions/workflows/ci.yml)
+
 An AI-powered web application that analyzes resumes against job descriptions.
 
 ## Features
@@ -122,8 +124,8 @@ The API was tested with 10 requests.
 
 - Successful Requests: 10/10 (100%)
 - Failed Requests: 0
-- Median Response Time: 3.91 seconds
-- Average Response Time: 4.17 seconds
+- Median Response Time: 4.22 seconds
+- Average Response Time: 4.33 seconds
 
 These results are from a single 10-request benchmark run. Actual performance may vary depending on network conditions and API response times.
 
